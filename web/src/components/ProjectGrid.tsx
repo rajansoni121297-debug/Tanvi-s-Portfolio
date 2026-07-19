@@ -1,4 +1,5 @@
 import { useState, type MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
 import { filterTabsBase, projects, type FilterKey } from '../data';
 
 export default function ProjectGrid() {
@@ -51,33 +52,52 @@ export default function ProjectGrid() {
       <ul className="list-none m-0 p-0" onMouseMove={handleListMouseMove} onMouseLeave={() => setActiveIndex(null)}>
         {filteredProjects.map((p, i) => {
           const active = activeIndex === i;
+          const rowClassName =
+            'relative flex items-center py-5 md:py-6 no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4';
+          const rowContent = (
+            <>
+              <span
+                aria-hidden="true"
+                className={`hidden md:inline-block font-semibold text-xl text-accent transition-all duration-500 ease-out ${
+                  active ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
+                }`}
+              >
+                →
+              </span>
+
+              <div
+                className={`font-semibold leading-[1.1] tracking-[-0.01em] text-[clamp(1.5rem,2.6vw,2.5rem)] transition-all duration-500 ease-out ${
+                  active ? 'translate-x-0 md:translate-x-12 text-ink-a/100' : 'translate-x-0 text-ink-a/25'
+                }`}
+              >
+                {p.shortTitle}
+              </div>
+            </>
+          );
           return (
             <li key={p.id} className={`group relative border-t border-hairline first:border-t-0 ${active ? 'z-30' : 'z-0'}`}>
-              <a
-                href={p.link ?? '#'}
-                {...(p.link ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                onMouseEnter={() => setActiveIndex(i)}
-                onFocus={() => setActiveIndex(i)}
-                onBlur={() => setActiveIndex(null)}
-                className="relative flex items-center py-5 md:py-6 no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4"
-              >
-                <span
-                  aria-hidden="true"
-                  className={`hidden md:inline-block font-semibold text-xl text-accent transition-all duration-500 ease-out ${
-                    active ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
-                  }`}
+              {p.detailSlug ? (
+                <Link
+                  to={`/work/${p.detailSlug}`}
+                  onMouseEnter={() => setActiveIndex(i)}
+                  onFocus={() => setActiveIndex(i)}
+                  onBlur={() => setActiveIndex(null)}
+                  className={rowClassName}
                 >
-                  →
-                </span>
-
-                <div
-                  className={`font-semibold leading-[1.1] tracking-[-0.01em] text-[clamp(1.5rem,2.6vw,2.5rem)] transition-all duration-500 ease-out ${
-                    active ? 'translate-x-0 md:translate-x-12 text-ink-a/100' : 'translate-x-0 text-ink-a/25'
-                  }`}
+                  {rowContent}
+                </Link>
+              ) : (
+                <a
+                  href={p.link ?? '#'}
+                  {...(p.link ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  onMouseEnter={() => setActiveIndex(i)}
+                  onFocus={() => setActiveIndex(i)}
+                  onBlur={() => setActiveIndex(null)}
+                  className={rowClassName}
                 >
-                  {p.shortTitle}
-                </div>
-              </a>
+                  {rowContent}
+                </a>
+              )}
 
               {/* Tilted preview card, desktop only */}
               <div

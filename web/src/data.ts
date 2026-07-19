@@ -64,6 +64,8 @@ export type Project = {
   image?: string;
   /** External URL (e.g. a Figma prototype) the project row links out to. */
   link?: string;
+  /** Slug for an in-site case study page at /work/:slug, if one exists yet. */
+  detailSlug?: string;
 };
 
 export const projects: Project[] = [
@@ -77,6 +79,7 @@ export const projects: Project[] = [
     meta: 'GSA, Scotland · 2023',
     cta: '7 min read →',
     image: '/work/crush-cup.png',
+    detailSlug: 'crush-cup',
   },
   {
     id: 'proj-nexushift',

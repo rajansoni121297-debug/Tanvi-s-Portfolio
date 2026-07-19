@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react';
-import Nav from './components/Nav';
-import Hero from './components/Hero';
-import Stats from './components/Stats';
-import About from './components/About';
-import WorkExperience from './components/WorkExperience';
-import ProjectGrid from './components/ProjectGrid';
-import Skills from './components/Skills';
-import Footer from './components/Footer';
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import ProjectDetail from './pages/ProjectDetail';
 
 export default function App() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -15,16 +10,14 @@ export default function App() {
     document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
 
+  const toggleTheme = () => setTheme((t) => (t === 'light' ? 'dark' : 'light'));
+
   return (
     <div className="min-h-screen bg-surface text-ink">
-      <Nav theme={theme} onToggleTheme={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))} />
-      <Hero />
-      <Stats />
-      <About />
-      <WorkExperience />
-      <ProjectGrid />
-      <Skills />
-      <Footer />
+      <Routes>
+        <Route path="/" element={<Home theme={theme} onToggleTheme={toggleTheme} />} />
+        <Route path="/work/:slug" element={<ProjectDetail theme={theme} onToggleTheme={toggleTheme} />} />
+      </Routes>
     </div>
   );
 }
