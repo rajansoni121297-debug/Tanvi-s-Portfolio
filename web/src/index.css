@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #ffffff;
+  --color-text: #111111;
+  --color-text-rgb: 17 17 17;
+  --color-muted: rgba(17, 17, 17, 0.55);
+  --color-border: rgba(17, 17, 17, 0.12);
+  --color-accent: #3e6bff;
+}
+
+.dark {
+  --color-bg: #0b0b0b;
+  --color-text: #f2f2f0;
+  --color-text-rgb: 242 242 240;
+  --color-muted: rgba(242, 242, 240, 0.55);
+  --color-border: rgba(242, 242, 240, 0.14);
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: background 0.3s, color 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
